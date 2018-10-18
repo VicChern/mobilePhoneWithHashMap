@@ -5,13 +5,13 @@ import java.util.*;
 public class MobilePhone {
     Scanner scanner = new Scanner(System.in);
     String name;
-    String phoneNumber;
-    private HashMap<String, String> contacts = new HashMap();
+    int phoneNumber;
+    private HashMap<String, Integer> contacts = new HashMap<>();
 
     public void listOfContacts() {
         for (String c : contacts.keySet()) {
-            String value = contacts.get(c);
-            System.out.println(c + value);
+            Integer value = contacts.get(c);
+            System.out.println("->" + c  + ": " + value + "<-");
             System.out.println("*");
         }
         if (contacts.size() == 0) {
@@ -21,25 +21,29 @@ public class MobilePhone {
         menu();
     }
 
-    public void addNewContact(String name, String phoneNumber) {
+    public void addNewContact() {
         System.out.println("Please, enter name and phone number");
-        name = scanner.nextLine();
-        phoneNumber = scanner.nextLine();
+        name = scanner.next();
+        phoneNumber = scanner.nextInt();
+        contacts.put(name, phoneNumber);
+        System.out.println("Contact " + name + " was added");
         System.out.println();
 
-        contacts.put(name, phoneNumber);
 
         menu();
     }
 
     public void removeContact(String name) {
-        contacts.remove(name);
+        System.out.println("Please enter contact, that you want to remove: ");
+        if (contacts.containsKey(scanner.next())) {
+            contacts.remove(name);
+        }else {
+            System.out.println("This contact doesn't exist. Please repeat \n");
+        }
         menu();
     }
 
     public void menu() {
-        String name = "";
-        String phoneNumber = "";
         System.out.println("1. Print list of contacts \n" +
                 "2. Add new contact \n" +
                 "3. Update existing contact \n" +
@@ -52,8 +56,7 @@ public class MobilePhone {
                 listOfContacts();
                 break;
             case 2:
-                addNewContact(name, phoneNumber);
-                break;
+                addNewContact();
             case 3:
                 updateExistingContact(name, phoneNumber);
                 break;
@@ -69,15 +72,22 @@ public class MobilePhone {
         }
     }
 
-    public void updateExistingContact(String UpdatedName, String UpdatedPhoneNumber) {
+    public void updateExistingContact(String UpdatedName, int updatedPhoneNumber) {
         System.out.println("Please enter contact, that you want to replace: ");
-        name = scanner.next();
+        if (contacts.containsKey(scanner.next())) {
 
-        UpdatedName = scanner.nextLine();
-        UpdatedPhoneNumber = scanner.nextLine();
-        contacts.replace(UpdatedName, UpdatedPhoneNumber);
+            System.out.println("Enter new name of contact");
+            UpdatedName = scanner.next();
 
-        System.out.println("\n Your contact list was updated");
+            System.out.println("Enter new phone number");
+            updatedPhoneNumber = scanner.nextInt();
+
+            contacts.replace(name, phoneNumber, updatedPhoneNumber);
+            contacts.put(UpdatedName, contacts.remove(name));
+
+            System.out.println("\nYour contact list was updated \n");
+        }else
+            System.out.println("This contact doesn't exist. Please repeat \n");
 
         menu();
     }
@@ -87,6 +97,8 @@ public class MobilePhone {
     }
 
 }
+
+
 // Able to store, modify, remove and query contact names.
 //////Create a master class (MobilePhone) that holds the ArrayList of Contacts
 //////Add a menu of options that are available.
