@@ -97,25 +97,3 @@ public class MobilePhone {
     }
 
 }
-
-
-// Able to store, modify, remove and query contact names.
-//////Create a master class (MobilePhone) that holds the ArrayList of Contacts
-//////Add a menu of options that are available.
-////// Options:
-////// Quit, print list of contacts, add new contact, updat
-//////                }
-//////            }e existing contact, remove contact
-//////// and search/find contact.
-//////// When adding or updating be sure to check if the contact already exists (use name)
-//////
-//////
-////////        for (int i = 0; i < contacts.size() - 1; i++) {
-////////            for (int k = i + 1; k < contacts.size(); k++) {
-////////                if ((contacts.get(i).equals(contacts.get(k)))) {
-////////
-////////                    System.out.println("Contact already exist");
-////////
-//////                    System.out.println"Contact already exist");
-////
-//////        }
