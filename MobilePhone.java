@@ -1,21 +1,25 @@
 package com.company;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class MobilePhone {
-    Scanner scanner = new Scanner(System.in);
-    String name;
-    int phoneNumber;
+    private Scanner scanner = new Scanner(System.in);
+    private String name;
+    private int phoneNumber;
     private HashMap<String, Integer> contacts = new HashMap<>();
+    private final String ASK = "You want to continue?";
 
     public void listOfContacts() {
         for (String c : contacts.keySet()) {
             Integer value = contacts.get(c);
-            System.out.println("->" + c  + ": " + value + "<-");
-            System.out.println("*");
+            System.out.println( c + ": " + value + "\n" + ASK);
+            askMethod();
+//            System.out.println("*");
         }
         if (contacts.size() == 0) {
-            System.out.println("Contacts list is empty");
+            System.out.println("Contacts list is empty \n");
+
         }
         System.out.println("__________________________________");
         menu();
@@ -26,18 +30,21 @@ public class MobilePhone {
         name = scanner.next();
         phoneNumber = scanner.nextInt();
         contacts.put(name, phoneNumber);
-        System.out.println("Contact " + name + " was added");
+        System.out.println("Contact " + name + " was added\n" + ASK);
+        askMethod();
         System.out.println();
 
 
         menu();
     }
 
-    public void removeContact(String name) {
+    public void removeContact() {
         System.out.println("Please enter contact, that you want to remove: ");
-        if (contacts.containsKey(scanner.next())) {
+        name = scanner.next();
+        if (contacts.containsKey(name)) {
             contacts.remove(name);
-        }else {
+            System.out.println("Contact was successfully removed \n" + ASK + askMethod());
+        } else {
             System.out.println("This contact doesn't exist. Please repeat \n");
         }
         menu();
@@ -57,11 +64,12 @@ public class MobilePhone {
                 break;
             case 2:
                 addNewContact();
+                break;
             case 3:
                 updateExistingContact(name, phoneNumber);
                 break;
             case 4:
-                removeContact(name);
+                removeContact();
                 break;
             case 5:
                 searchFind();
@@ -85,15 +93,43 @@ public class MobilePhone {
             contacts.replace(name, phoneNumber, updatedPhoneNumber);
             contacts.put(UpdatedName, contacts.remove(name));
 
-            System.out.println("\nYour contact list was updated \n");
-        }else
+            System.out.println("\nYour contact list was updated \n" + ASK);
+        } else
             System.out.println("This contact doesn't exist. Please repeat \n");
 
         menu();
     }
 
     public void searchFind() {
-
+        System.out.println("Enter name of contact that you want to find:");
+        name = scanner.next();
+        if (contacts.containsKey(name)) {
+            phoneNumber = contacts.get(name);
+            System.out.println("Contact was successfully founded");
+            System.out.println( name + ": " + phoneNumber + " \n" + ASK + askMethod());
+        } else {
+            System.out.println("Contact doesn't exist, please repeat \n");
+        }
+        menu();
     }
 
-}
+    public String askMethod() {
+        System.out.println( "YES or NO?");
+        String answer;
+        answer = scanner.next();
+        switch (answer) {
+            case "YES":
+                menu();
+                break;
+            case "NO":
+                break;
+            }return "";
+        }
+    }
+
+
+
+/**
+ * Not decided Problems:
+ 
+ */
