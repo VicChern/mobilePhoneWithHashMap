@@ -13,26 +13,31 @@ public class MobilePhone {
     public void listOfContacts() {
         for (String c : contacts.keySet()) {
             Integer value = contacts.get(c);
-            System.out.println( c + ": " + value + "\n" + ASK);
-            askMethod();
-//            System.out.println("*");
+            System.out.println(c + ": " + value + "\n");
         }
         if (contacts.size() == 0) {
             System.out.println("Contacts list is empty \n");
 
         }
         System.out.println("__________________________________");
+        System.out.println(ASK);
+        askMethod();
         menu();
     }
 
     public void addNewContact() {
-        System.out.println("Please, enter name and phone number");
-        name = scanner.next();
-        phoneNumber = scanner.nextInt();
-        contacts.put(name, phoneNumber);
-        System.out.println("Contact " + name + " was added\n" + ASK);
-        askMethod();
-        System.out.println();
+        try {
+            System.out.println("Please, enter name and phone number");
+            name = scanner.next();
+            phoneNumber = scanner.nextInt();
+            contacts.put(name, phoneNumber);
+            System.out.println("Contact " + name + " was added\n" + ASK);
+            askMethod();
+            System.out.println();
+        } catch (Exception e) {
+            System.out.println("Invalid enter please repeat \n");
+            addNewContact();
+        }
 
 
         menu();
@@ -43,7 +48,8 @@ public class MobilePhone {
         name = scanner.next();
         if (contacts.containsKey(name)) {
             contacts.remove(name);
-            System.out.println("Contact was successfully removed \n" + ASK + askMethod());
+            System.out.println("Contact was successfully removed \n" + ASK);
+            askMethod();
         } else {
             System.out.println("This contact doesn't exist. Please repeat \n");
         }
@@ -76,7 +82,7 @@ public class MobilePhone {
                 break;
             case 6:
                 System.out.println("You just exit from your program");
-                break;
+
         }
     }
 
@@ -94,6 +100,7 @@ public class MobilePhone {
             contacts.put(UpdatedName, contacts.remove(name));
 
             System.out.println("\nYour contact list was updated \n" + ASK);
+            askMethod();
         } else
             System.out.println("This contact doesn't exist. Please repeat \n");
 
@@ -106,30 +113,37 @@ public class MobilePhone {
         if (contacts.containsKey(name)) {
             phoneNumber = contacts.get(name);
             System.out.println("Contact was successfully founded");
-            System.out.println( name + ": " + phoneNumber + " \n" + ASK + askMethod());
+            System.out.println(name + ": " + phoneNumber + " \n" + ASK);
+            askMethod();
         } else {
             System.out.println("Contact doesn't exist, please repeat \n");
         }
         menu();
     }
 
-    public String askMethod() {
-        System.out.println( "YES or NO?");
+    public void askMethod() {
+        System.out.println("Yes or No?");
         String answer;
         answer = scanner.next();
         switch (answer) {
-            case "YES":
+            case "Yes":
                 menu();
                 break;
-            case "NO":
+            case "No":
                 break;
-            }return "";
+            default:
+                System.out.println("Invalid enter, you have been directed to menu");
+                break;
         }
     }
-
+}
 
 
 /**
  * Not decided Problems:
- 
+ * In this case scanner normally working with next() method only
+ * In next contacts, your phone number should contains at most the same number of digits that contains first contact
+ * or would be thrown Mismatch Exception.
+ * What about the size of MobilePhone class? Should I separate it to more class. Or size is OK?
+ *
  */
